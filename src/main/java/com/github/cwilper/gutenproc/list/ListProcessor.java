@@ -54,7 +54,7 @@ public class ListProcessor extends BaseProcessor
     }
 
     @Override
-    public void accept(final Book book) {
+    public boolean test(final Book book) {
         if (abbreviated) {
             System.out.println(
                     book.getFirst(Field.ETEXT_NO).get() + ": "
@@ -68,6 +68,7 @@ public class ListProcessor extends BaseProcessor
             }
             System.out.println();
         }
+        return true;
     }
 
     @Override

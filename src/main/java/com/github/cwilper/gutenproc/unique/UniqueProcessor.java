@@ -65,7 +65,7 @@ public class UniqueProcessor extends BaseProcessor
     }
 
     @Override
-    public void accept(final Book book) {
+    public boolean test(final Book book) {
         for (Field field : book.fields()) {
             Map<String, Integer> valueMap = fieldMap.get(field);
             if (valueMap == null) {
@@ -80,6 +80,7 @@ public class UniqueProcessor extends BaseProcessor
                 valueMap.put(value, count + 1);
             }
         }
+        return true;
     }
 
     @Override

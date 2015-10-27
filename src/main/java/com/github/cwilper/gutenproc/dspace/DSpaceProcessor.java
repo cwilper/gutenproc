@@ -94,7 +94,7 @@ public class DSpaceProcessor extends BaseProcessor
     }
 
     @Override
-    public void accept(final Book book) {
+    public boolean test(final Book book) {
         try {
             System.out.print("Creating package for book #" + matchCount + " of " + scanCount + " scanned. ");
             final File itemDir = new File(outputDir, "book_" + book.getFirst(Field.ETEXT_NO).get());
@@ -105,7 +105,7 @@ public class DSpaceProcessor extends BaseProcessor
             if (bitstreams.isEmpty()) {
                 itemDir.delete();
                 System.out.println("SKIPPED; No eligible bitstreams");
-                return;
+                return false;
             }
 
             // add content file with list of bitstreams
@@ -124,6 +124,7 @@ public class DSpaceProcessor extends BaseProcessor
             System.out.println("FAILED");
             Throwables.propagate(e);
         }
+        return true;
     }
 
     private String getContents(List<String> bitstreams) {

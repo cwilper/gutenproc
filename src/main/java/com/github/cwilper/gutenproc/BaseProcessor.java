@@ -10,16 +10,19 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public abstract class BaseProcessor
-        implements Consumer<Book>, Processor
+        implements Predicate<Book>, Processor
 {
     protected boolean captureMatchInfo;
     protected StringBuilder matchInfo = null;
 
     protected int scanCount = 0;
     protected int matchCount = 0;
+    protected int processCount = 0;
 
     protected Long minLines;
     protected Long maxLines;
+
+    protected long limit;
 
     @Override
     public String getHelpFooter() {
@@ -72,6 +75,11 @@ public abstract class BaseProcessor
         if (cmd.hasOption("mal")) {
             maxLines = cmd.getOptionLongValue("mal").get();
         }
+        if (cmd.hasOption("l")) {
+            limit = cmd.getOptionLongValue("l").get();
+        } else {
+            limit = Long.MAX_VALUE;
+        }
     }
 
     @Override
@@ -93,18 +101,11 @@ public abstract class BaseProcessor
                 books = books.filter(contentLineMatches(value));
             }
         }
-        if (cmd.hasOption("l")) {
-            books = books.limit(cmd.getOptionLongValue("l").get());
-        }
         if (minLines != null) {
-            books = books.filter(book -> {
-                return book.lineCount() >= minLines;
-            });
+            books = books.filter(book -> book.lineCount() >= minLines);
         }
         if (maxLines != null) {
-            books = books.filter(book -> {
-                return book.lineCount() <= maxLines;
-            });
+            books = books.filter(book -> book.lineCount() <= maxLines);
         }
 
         books = books.filter(book -> {
@@ -112,7 +113,13 @@ public abstract class BaseProcessor
             return true;
         });
 
-        books.forEach(this);
+        books = books.filter(this);
+
+        books = books.limit(limit);
+
+        books.forEach(book -> {
+            processCount++;
+        });
     }
 
     protected Stream<Book> filterByFieldIfNeeded(Commandline cmd, Stream<Book> books, Field field) {
