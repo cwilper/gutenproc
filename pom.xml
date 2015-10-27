@@ -21,7 +21,7 @@
         <plugin.exec.version>1.4.0</plugin.exec.version>
 
         <min.java.version>1.8</min.java.version>
-        <min.maven.version>3.3.1</min.maven.version>
+        <min.maven.version>3.2.0</min.maven.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
