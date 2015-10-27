@@ -28,7 +28,7 @@ public class DVD
 
     public Stream<Book> books() {
         try {
-            return Files.list(dvdPath.resolve("ETEXT"))
+            return Files.list(dvdPath.resolve("etext"))
                     .map(path -> lines(path, UTF_8))
                     .map(lines -> book(lines));
                            // lines.collect(Collectors.toList())));
