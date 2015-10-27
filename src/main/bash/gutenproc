@@ -1,0 +1,4 @@
+#!/bin/bash
+
+jar=$(dirname $0)/../../../target/gutenproc.jar
+java -Djava.awt.headless=true -jar "$jar" "$@"
