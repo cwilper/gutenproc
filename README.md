@@ -57,4 +57,4 @@ List the top ten authors among all books whose titles begin with "The", ordered 
 Create a directory in DSpace Simple Archive Format with one item for each English book whose title contains the word "space". Each item should have the original content file from the DVD at a minimum, and if plaintext is available, a generated ``.pdf`` with Project Gutenberg header and footer text removed should be included as an additional bitstream.
 
 	gutenproc dspace --output-dir ingest-me --match-title space \
-                         --generate-stripped-pdf
+                      --match-language English --generate-stripped-pdf
