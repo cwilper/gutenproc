@@ -106,6 +106,19 @@ public final class GutenProc
         }
     }
 
+    public static Optional<File> getFileCaseInsensitive(String path) {
+        File origFile = new File(path);
+        if (origFile.exists()) {
+            return Optional.of(origFile);
+        }
+        for (File file : origFile.getParentFile().listFiles()) {
+            if (file.getName().equalsIgnoreCase(origFile.getName())) {
+                return Optional.of(file);
+            }
+        }
+        return Optional.empty();
+    }
+
     private static int getTerminalWidth() {
         int reportedWidth = TerminalFactory.get().getWidth();
         if (reportedWidth < 50) {

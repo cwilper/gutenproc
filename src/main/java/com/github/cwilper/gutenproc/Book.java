@@ -17,6 +17,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -172,7 +173,7 @@ public class Book
     }
 
     public File getFile() {
-        return new File(getFirst(Field.PATH).get());
+        return GutenProc.getFileCaseInsensitive(getFirst(Field.PATH).get()).get();
     }
 
     public boolean isZipped() {

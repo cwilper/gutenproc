@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,15 +21,20 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class DVD
 {
     private final Path dvdPath;
+    private final Path indexPath;
 
     public DVD(final File file) {
         Preconditions.checkArgument(file.isDirectory(), "No such directory: " + file);
         this.dvdPath = file.toPath();
+        final String etextPath = dvdPath.resolve("etext").toString();
+        final Optional<File> indexDir = GutenProc.getFileCaseInsensitive(etextPath);
+        Preconditions.checkArgument(indexDir.isPresent(), "No such directory: " + etextPath);
+        indexPath = indexDir.get().toPath();
     }
 
     public Stream<Book> books() {
         try {
-            return Files.list(dvdPath.resolve("etext"))
+            return Files.list(indexPath)
                     .map(path -> lines(path, UTF_8))
                     .map(lines -> book(lines));
                            // lines.collect(Collectors.toList())));
