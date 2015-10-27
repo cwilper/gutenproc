@@ -30,7 +30,7 @@ Basic usage of ``gutenproc`` follows the pattern:
 
 _Tip: Instead of specifying ``-d /path/to/DVD`` with every invocation of ``gutenproc``, you may also define the ``PGDVD_PATH`` environment variable._
 
-** Processors:**
+**Processors:**
 
 * **list:** Prints book metadata
 * **unique:** Prints unique metadata values or a summary of unique value counts
